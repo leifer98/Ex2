@@ -120,7 +120,7 @@ Class Diagram:
 
 # Ex2_2
 
-PART B - EXPLAINED : In order to run the project, one should clone the repository to its' computer or download a zip of it, then open it through an IDE, go to the src/Ex2_2/Tests and run it.
+In order to run the project, one should clone the repository to its' computer or download a zip of it, then open it through an IDE, go to the src/Ex2_2/Tests and run it.
 
 In this assignment we were asked to create two new types that extend the functionality of Java's Concurrency Framework.
 
