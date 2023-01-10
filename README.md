@@ -128,6 +128,18 @@ A generic task with a Type that returns a result and may throw an exception. Eac
 A custom thread pool class that defines a method for submitting a generic task as described in the section 1 to a priority queue, and a method for submitting a generic task created by a Callable and a Type, passed as arguments. A ThreadPool is a collection of worker threads that are waiting to be dispatched to execute tasks. When you create a new task, you submit it to the thread pool, which assigns it to one of the available worker threads. This can be more efficient than creating a new thread for every task, because creating and starting a new thread can be expensive in terms of time and resources.
 Our implementation of Task starts with implementing Callable. Thus, if one would try Task.start(), the callable thread of the task would run. The task class is generic and creates instances with factory method (that uses the class's private constructors). The task has a TaskType and a callable objects, as required, and FutureTask and CustomExecutor object (the FutureTask object holds the callable, and we can get the generic value that returns from the callable from it. The Task holds its executor so that if we change the Task's priority, we would be able to notify the executor to make the necessary changes). When creating task instances, we used a Factory method. The factory design pattern says that define an interface ( A java interface or an abstract class) for creating object and let the subclasses decide which class to instantiate. The factory method in the interface lets a class defers the instantiation to one or more concrete subclasses (From GFG)
 
+
+The Adapter design pattern is a structural design pattern that allows objects with incompatible interfaces to work together.
+It does this by creating a wrapper class that converts the interface of one class into the interface expected by the client.
+There are two types of adapter patterns:
+Object Adapter: Which use composition and a wrapper class to adapt one interface to another.
+Class Adapter: Which multiple inheritance to adapt one interface to another.
+The Adapter pattern can be very useful when dealing with code that is built on top of third-party libraries, 
+or when trying to reuse existing code in a new context.
+the Task class serves as an Adapter between the Callable interface and the TaskType and FutureTask classes, 
+adapting the Callable interface so that it can be used with the TaskType and FutureTask classes. Additionally, 
+it also provides additional functionality by allowing tasks to be classified into types and be assigned with priority.
+
 Our implementation of CustomExecutor starts with extending Thread. We're doing it so the CustomExecutor will have a daemon thread ( daemon thread is a thread that does not prevent the JVM from exiting when the program finishes but the thread is still running) that runs in the background and does all the stuff we were asked to do again and again in the assignment (such as getting rid of unused threads, inserting new ones from the queue, updating the currentMaxPriority ect). In Order to save the tasks, sorted by priority - we used a PriorityQueue that gets as a parameter a comparator that we implemented (the PriorityComparator class). Moreover, we made sure that as we were asked in the instructions - to lock the access to the queue every time it is used, by using an object named lock and synchronizing it.
 
 The test checks functionality and execution of tasks with different priorities using the CustomExecutor, Tasks with callables that returns different values, and checks the getMaxPriority function in O(1) time.
